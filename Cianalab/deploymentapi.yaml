@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cianalabapi-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cianalabapi
+  template:
+    metadata:
+      labels:
+        app: cianalabapi
+    spec:
+      containers:
+      - name: api-service
+        image: cianadevregistry.azurecr.io/cianalabapi:v1
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: cianalabapi-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cianalabapi-service
+spec:
+  type: ClusterIP
+  selector:
+    app: cianalabapi
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: http
+

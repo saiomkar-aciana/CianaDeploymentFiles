@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cianalabsui-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cianalabsui
+  template:
+    metadata:
+      labels:
+        app: cianalabsui
+    spec:
+      containers:
+      - name: cianalabsui
+        image: cianadevregistry.azurecr.io/cianalabs:v2
+        ports:
+        - containerPort: 4200
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cianalabsui-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 4200
+    targetPort: 4200
+    name: http
+  selector:
+    app: cianalabsui

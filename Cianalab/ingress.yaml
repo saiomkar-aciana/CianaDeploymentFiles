@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cianaingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: staging.ciana.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: cianalabsui
+            port:
+              number: 4200
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: cianalabapi
+            port:
+              number: 8080
