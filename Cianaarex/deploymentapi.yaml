@@ -13,7 +13,7 @@ spec:
         app: cianaarexapi
     spec:
       containers:
-      - name: api-service
+      - name: cianaarexapi-service
         image: cianadevregistry.azurecr.io/cianaarexapi:v1
         ports:
         - containerPort: 8080
