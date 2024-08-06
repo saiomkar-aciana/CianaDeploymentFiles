@@ -23,10 +23,10 @@ kind: Service
 metadata:
   name: cianaaiapi-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - port: 8080
     targetPort: 8080
-    Protocol: TCP
+    protocol: TCP
   selector:
     app: cianaaiapi
