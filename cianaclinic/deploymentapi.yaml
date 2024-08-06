@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cianaclinicapi-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cianaclinicapi
+  template:
+    metadata:
+      labels:
+        app: cianaclinicapi
+    spec:
+      containers:
+      - name: cianaclinicapi
+        image: cianadevregistry.azurecr.io/cianaclinicapi:v2
+        ports:
+        - containerPort: 4200
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cianaclinicapi-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 4200
+    targetPort: 4200
+    name: http
+  selector:
+    app: cianaclinicapi
