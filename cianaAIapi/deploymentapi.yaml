@@ -17,6 +17,9 @@ spec:
         image: cianadevregistry.azurecr.io/cianaaiapi:v1
         ports:
         - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: cianaarexapi-config
 ---
 apiVersion: v1
 kind: Service
