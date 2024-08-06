@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: cianaaiapi
-        image: cianadevregistry.azurecr.io/cianaaiapi:v2
+        image: cianadevregistry.azurecr.io/cianaaiapi:v1
         ports:
         - containerPort: 4200
 ---
