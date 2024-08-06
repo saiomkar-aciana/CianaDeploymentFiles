@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cianasocketapi-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cianasocketapi
+  template:
+    metadata:
+      labels:
+        app: cianasocketapi
+    spec:
+      containers:
+      - name: cianasocketapi-service
+        image: cianadevregistry.azurecr.io/cianasocketapi:v1
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: cianasocketapi-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cianasocketapi-service
+spec:
+  type: ClusterIP
+  selector:
+    app: cianasocketapi
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+
