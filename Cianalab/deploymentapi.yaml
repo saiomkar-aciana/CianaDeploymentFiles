@@ -13,8 +13,8 @@ spec:
         app: cianalabapi
     spec:
       containers:
-      - name: api-service
-        image: cianadevregistry.azurecr.io/cianalabapi:v1
+      - name: cianalabapi-service
+        image: cianadevregistry.azurecr.io/cianalabapi:v2
         ports:
         - containerPort: 8080
         envFrom:
@@ -27,11 +27,12 @@ kind: Service
 metadata:
   name: cianalabapi-service
 spec:
-  type: ClusterIP
   selector:
     app: cianalabapi
   ports:
-  - port: 8080
-    targetPort: 8080
-    name: http
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+
 

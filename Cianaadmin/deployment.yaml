@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cianaarexui-deployment
+  name: cianaadminui-deployment
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: cianaarexui
+      app: cianaadminui
   template:
     metadata:
       labels:
-        app: cianaarexui
+        app: cianaadminui
     spec:
       containers:
-      - name: cianaarexui
-        image: cianadevregistry.azurecr.io/cianaarex:v5
+      - name: cianaadminui
+        image: cianadevregistry.azurecr.io/cianaadmin:v1
         ports:
         - containerPort: 4200
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: cianaarexui-service
+  name: cianaadminui-service
 spec:
   type: ClusterIP
   ports:
@@ -29,4 +29,4 @@ spec:
     targetPort: 4200
     protocol: TCP
   selector:
-    app: cianaarexui
+    app: cianaadminui

@@ -3,23 +3,55 @@ kind: Ingress
 metadata:
   name: cianaingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-redirect-off: "true"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      add_header 'Access-Control-Allow-Origin' '*' always;
 spec:
+  ingressClassName: nginx
   rules:
-  - host: staging.ciana.com
-    http:
+  - http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: cianalabsui
+            name: cianalabsui-service
             port:
               number: 4200
-      - path: /api
+      - path: /api(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cianalabapi-service
+            port:
+              number: 8080
+      - path: /arex(/|$)(.*)
         pathType: Prefix
         backend:
           service:
-            name: cianalabapi
+            name: cianaarexui-service
+            port:
+              number: 4200
+      - path: /arexapi(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cianaarexapi-service
+            port:
+              number: 8080
+      - path: /adminui(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: cianaadminui-service
+            port:
+              number: 4200
+      - path: /adminapi(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cianaadminapi-service
             port:
               number: 8080

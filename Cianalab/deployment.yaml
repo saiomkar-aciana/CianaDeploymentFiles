@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: cianalabsui-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: cianalabsui
@@ -23,10 +23,10 @@ kind: Service
 metadata:
   name: cianalabsui-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP  ## we will have muliple type like loadbalancer,clusterIp,etc
   ports:
-  - port: 4200
+  - protocol: TCP
+    port: 4200
     targetPort: 4200
-    name: http
   selector:
     app: cianalabsui
