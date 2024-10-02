@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cianacarenewapi-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cianacarenewapi
+  template:
+    metadata:
+      labels:
+        app: cianacarenewapi
+    spec:
+      containers:
+      - name: cianacarenewapi-service
+        image: cianadevregistry.azurecr.io/cianacarenewapi:v1
+        ports:
+        - containerPort: 8080 
+        envFrom:
+        - configMapRef:
+            name: cianacarenewapi-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cianacarenewapi-service
+spec:
+  type: ClusterIP
+  selector:
+    app: cianacarenewapi
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+
