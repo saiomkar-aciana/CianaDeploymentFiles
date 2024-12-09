@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: cianalabapi-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: cianalabapi
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: cianalabapi-service
-        image: cianadevregistry.azurecr.io/cianalabapi:v2
+        image: cianadevregistry.azurecr.io/cianalabapi:v12
         ports:
         - containerPort: 8080
         envFrom:

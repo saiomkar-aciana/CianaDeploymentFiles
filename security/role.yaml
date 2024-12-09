@@ -1,0 +1,9 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role  # Use ClusterRole if you want it to be cluster-wide
+metadata:
+  name: deployment-image-updater
+  namespace: default  # Replace with the appropriate namespace
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch", "patch", "update"]

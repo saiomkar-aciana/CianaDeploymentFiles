@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: deployment-image-updater-binding
+  namespace: default  # Replace with the appropriate namespace
+subjects:
+- kind: User
+  name:  65f3b347-0c15-46e4-9ea8-af73d3d02680 # Replace with the service principal's App ID
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: deployment-image-updater
+  apiGroup: rbac.authorization.k8s.io

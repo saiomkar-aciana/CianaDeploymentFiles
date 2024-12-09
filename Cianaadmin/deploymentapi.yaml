@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: cianaadminapi-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: cianaadminapi
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: cianaadminapi-service
-        image: cianadevregistry.azurecr.io/cianaadminapi:v1
+        image: cianadevregistry.azurecr.io/cianaadminapi:v5
         ports:
         - containerPort: 8080
         envFrom:

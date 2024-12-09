@@ -3,18 +3,17 @@ kind: Ingress
 metadata:
   name: cianaingress
   annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "5m" #
     nginx.ingress.kubernetes.io/rewrite-target: /$2
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-redirect-off: "true"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      add_header 'Access-Control-Allow-Origin' '*' always;
 spec:
   ingressClassName: nginx
   rules:
   - http:
       paths:
-      - path: /
-        pathType: Prefix
+      - path: /cianalab(/|$)(.*)
+        pathType: ImplementationSpecific
         backend:
           service:
             name: cianalabsui-service
@@ -28,7 +27,7 @@ spec:
             port:
               number: 8080
       - path: /arex(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: cianaarexui-service
@@ -42,7 +41,7 @@ spec:
             port:
               number: 8080
       - path: /adminui(/|$)(.*)
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: cianaadminui-service
@@ -55,3 +54,66 @@ spec:
             name: cianaadminapi-service
             port:
               number: 8080
+      - path: /cianacareclinic(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cianaclinicui-service
+            port:
+              number: 4200
+      - path: /cianacare(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cianacareui-service
+            port:
+              number: 4200
+      - path: /clinicapi(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cianaclinicapi-service
+            port:
+              number: 8080
+      - path: /patientapi(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cianahealthapi-service
+            port:
+              number: 8080
+      - path: /socket(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cianasocketapi-service
+            port:
+              number: 8080
+      - path: /aiapi(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cianaaiapi-service
+            port:
+              number: 8080
+      - path: /cianacareapi(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cianacarenewapi-service
+            port:
+              number: 8080
+      - path: /cianacarewebui(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cianacarenewui-service
+            port:
+              number: 4200
+
+
+
+
+
+
+

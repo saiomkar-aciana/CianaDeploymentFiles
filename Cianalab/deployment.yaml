@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: cianalabsui
-        image: cianadevregistry.azurecr.io/cianalabs:v2
+        image: cianadevregistry.azurecr.io/cianalabs:v5
         ports:
         - containerPort: 4200
 ---

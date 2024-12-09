@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: cianaarexapi-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: cianaarexapi
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: cianaarexapi-service
-        image: cianadevregistry.azurecr.io/cianaarexapi:v1
+        image: cianadevregistry.azurecr.io/cianaarexapi:v3
         ports:
         - containerPort: 8080
         envFrom:

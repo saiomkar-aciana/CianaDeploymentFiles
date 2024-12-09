@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: cianahealthapi-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: cianahealthapi
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: cianahealthapi-service
-        image: cianadevregistry.azurecr.io/cianahealthapi:v1
+        image: cianadevregistry.azurecr.io/cianahealthapi:v4
         ports:
         - containerPort: 8080
         envFrom:
@@ -33,5 +33,5 @@ spec:
   ports:
   - port: 8080
     targetPort: 8080
-    name: http
+    protocol: TCP
 

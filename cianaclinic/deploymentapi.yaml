@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: cianaclinicapi-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: cianaclinicapi
@@ -14,19 +14,22 @@ spec:
     spec:
       containers:
       - name: cianaclinicapi
-        image: cianadevregistry.azurecr.io/cianaclinicapi:v2
+        image: cianadevregistry.azurecr.io/cianaclinicapi:v3
         ports:
-        - containerPort: 4200
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: cianaclinicapi-config
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: cianaclinicapi-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
-  - port: 4200
-    targetPort: 4200
-    name: http
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
   selector:
     app: cianaclinicapi

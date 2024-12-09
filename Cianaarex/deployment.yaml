@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: cianaarexui-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: cianaarexui
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: cianaarexui
-        image: cianadevregistry.azurecr.io/cianaarex:v5
+        image: cianadevregistry.azurecr.io/cianaarex:2
         ports:
         - containerPort: 4200
 ---

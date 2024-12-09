@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: cianacareui-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: cianacareui
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: cianacareui
-        image: cianadevregistry.azurecr.io/cianacareui:v2
+        image: cianadevregistry.azurecr.io/cianacareui:v5
         ports:
         - containerPort: 4200
 ---
@@ -23,10 +23,10 @@ kind: Service
 metadata:
   name: cianacareui-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - port: 4200
     targetPort: 4200
-    name: http
+    protocol: TCP
   selector:
     app: cianacareui
