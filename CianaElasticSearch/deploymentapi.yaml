@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cianaelasticsearch-deployment
+  labels:
+    app: cianaelasticsearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cianaelasticsearch
+  template:
+    metadata:
+      labels:
+        app: cianaelasticsearch
+    spec:
+      containers:
+      - name: cianaelasticsearch
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
+        ports:
+        - containerPort: 9200
+        - containerPort: 9300  # Required for Elasticsearch cluster communication
+        env:
+        - name: discovery.type
+          value: "single-node"
+        - name: xpack.security.enabled
+          value: "true"
+        - name: xpack.security.enrollment.enabled
+          value: "true"
+        - name: ELASTIC_PASSWORD
+          value: "Archents@123"
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1"
+          limits:
+            memory: "2Gi"
+            cpu: "1"
+        volumeMounts:
+        - name: cianaelasticsearch-data
+          mountPath: /usr/share/elasticsearch/data
+      volumes:
+      - name: cianaelasticsearch-data
+        emptyDir: {}  # Use a persistent volume for production
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cianaelasticsearch-service
+  labels:
+    app: cianaelasticsearch
+spec:
+  type: ClusterIP
+  selector:
+    app: cianaelasticsearch
+  ports:
+  - port: 9200
+    targetPort: 9200
+    name: http
+  - port: 9300
+    targetPort: 9300
+    name: transport  # Added name for the second port
