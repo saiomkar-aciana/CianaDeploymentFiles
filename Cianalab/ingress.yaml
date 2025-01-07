@@ -110,6 +110,13 @@ spec:
             name: cianacarenewui-service
             port:
               number: 4200
+      - path: /elasticsearch(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cianaelasticsearch-service
+            port:
+              number: 9200
       - path: /redis(/|$)(.*)
         pathType: ImplementationSpecific
         backend:
