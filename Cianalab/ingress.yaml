@@ -110,6 +110,20 @@ spec:
             name: cianacarenewui-service
             port:
               number: 4200
+      - path: /redis(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: docisnredis-service
+            port:
+              number: 6379
+      - path: /ndhmapi(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cianandhm-service
+            port:
+              number: 5002 
 
 
 
