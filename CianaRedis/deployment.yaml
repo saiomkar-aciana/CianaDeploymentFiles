@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docisnredis-deployment
+  labels:
+    app: docisnredis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docisnredis
+  template:
+    metadata:
+      labels:
+        app: docisnredis
+    spec:
+      containers:
+      - name: docisnredis
+        image: redis:7.0.11-alpine
+        ports:
+        - containerPort: 6379
+        command:
+        - "redis-server" # No password configuration here
+        args:            # Add optional arguments if needed
+        - "--save"       # Example: Save snapshots
+        - ""
+        - "--appendonly"
+        - "no"           # Turn off AOF persistence
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          allowPrivilegeEscalation: false
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+        env:
+        - name: PORT
+          value: "6379"
+        - name: HOST
+          value: "docisnredis"
+      volumes:
+      - name: redis-data
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: docisnredis
+  labels:
+    app: docisnredis
+spec:
+  type: LoadBalancer
+  selector:
+    app: docisnredis
+  ports:
+  - port: 6379
+    targetPort: 6379
+    name: redis
