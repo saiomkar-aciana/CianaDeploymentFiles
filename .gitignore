@@ -1,3 +1,4 @@
 *.json
 config*.yaml
 secert*.yaml
+.qodo

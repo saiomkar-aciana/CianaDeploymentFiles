@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cianandhm-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cianandhm
+  template:
+    metadata:
+      labels:
+        app: cianandhm
+    spec:
+      containers:
+      - name: cianandhm
+        image: cianadevregistry.azurecr.io/cianandhm:v59
+        ports:
+        - containerPort: 5002
+        envFrom:
+        - configMapRef:
+            name: cianandhm-config
+        env:
+        - name: PATH
+          value: "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"  # Set PATH to include Node.js binaries
+        - name: REDIS_HOST
+          value: "docisnredis"  # Redis service name (internal DNS)
+        - name: REDIS_PORT
+          value: "6379"  # Redis port (default)
+        # Removed REDIS_PASSWORD since authentication is not required
+        command: ["npm", "start"]  # Use npm without full path
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cianandhm-service
+spec:
+  type: ClusterIP
+  ports:
+  - port: 5002
+    targetPort: 5002
+    protocol: TCP
+  selector:
+    app: cianandhm
