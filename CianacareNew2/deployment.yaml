@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cianacarenewui2-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cianacarenewui2
+  template:
+    metadata:
+      labels:
+        app: cianacarenewui2
+    spec:
+      containers:
+      - name: cianacarenewui2
+        image: cianadevregistry.azurecr.io/cianacareui2:13
+        ports:
+        - containerPort: 4200
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cianacarenewui2-service
+spec:
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 4200
+    targetPort: 4200
+  selector:
+    app: cianacarenewui2

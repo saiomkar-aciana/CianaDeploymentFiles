@@ -12,6 +12,13 @@ spec:
   rules:
   - http:
       paths:
+      - path: /cianacareabha(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cianacarenewui2-service
+            port:
+              number: 4200
       - path: /cianalab(/|$)(.*)
         pathType: ImplementationSpecific
         backend:
@@ -131,6 +138,13 @@ spec:
             name: cianandhm-service
             port:
               number: 5002 
+      - path: /cianacareapi2(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cianacarenewapi2-service
+            port:
+              number: 8080
 
 
 
