@@ -3,14 +3,19 @@ kind: Ingress
 metadata:
   name: cianaingress
   annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: "5m" #
+    nginx.ingress.kubernetes.io/proxy-body-size: "5m"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/proxy-redirect-off: "true"
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - staging.ciana.health
+    secretName: my-tls-secret
   rules:
-  - http:
+  - host: staging.ciana.health
+    http:
       paths:
       - path: /cianacareabha(/|$)(.*)
         pathType: ImplementationSpecific
