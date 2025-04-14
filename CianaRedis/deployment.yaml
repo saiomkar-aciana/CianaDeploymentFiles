@@ -26,6 +26,9 @@ spec:
         - ""
         - "--appendonly"
         - "no"           # Turn off AOF persistence
+        - "--replicaof"
+        - "no"
+        - "one"
         resources:
           requests:
             memory: "256Mi"
