@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: cianandhm
-        image: cianadevregistry.azurecr.io/cianandhm:v59
+        image: cianadevregistry.azurecr.io/cianandhm:13
         ports:
         - containerPort: 5002
         envFrom:
