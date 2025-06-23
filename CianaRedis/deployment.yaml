@@ -19,16 +19,6 @@ spec:
         image: redis:7.0.11-alpine
         ports:
         - containerPort: 6379
-        command:
-        - "redis-server" # No password configuration here
-        args:            # Add optional arguments if needed
-        - "--save"       # Example: Save snapshots
-        - ""
-        - "--appendonly"
-        - "no"           # Turn off AOF persistence
-        - "--replicaof"
-        - "no"
-        - "one"
         resources:
           requests:
             memory: "256Mi"
@@ -51,6 +41,7 @@ spec:
       volumes:
       - name: redis-data
         emptyDir: {}
+
 ---
 apiVersion: v1
 kind: Service
